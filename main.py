@@ -1,11 +1,11 @@
-from typing import Optional, Annotated
+from contextlib import asynccontextmanager
+from typing import Annotated
 
 from fastapi import FastAPI, Depends
-from pydantic import BaseModel
-
-from contextlib import asynccontextmanager
 
 from database import create_tables, delete_tables
+from router import router as tasks_router
+from schemas import STaskAdd
 
 
 @asynccontextmanager
@@ -21,28 +21,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
-
-
-class STaskAdd(BaseModel):
-    name: str
-    description: Optional[str] = None
-
-
-class STask(STaskAdd):
-    id: int
-
+app.include_router(tasks_router)
 
 tasks = []
 
 
-@app.post("/tasks")
-async def add_task(
-    task: Annotated[STaskAdd, Depends()],
-):
-    tasks.append(task)
-    return {"ok": True}
-
-# @app.get("/tasks")
-# def get_home():
-#     task = Task(name="My task", description="my desk")
-#     return {"data": task}
