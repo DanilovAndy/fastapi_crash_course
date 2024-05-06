@@ -1,0 +1,6 @@
+.venv
+Dockerfile
+tasks.db
+git-conventional-commits.yaml
+.git-hooks
+Dockerfile
