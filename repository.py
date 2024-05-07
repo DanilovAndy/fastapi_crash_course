@@ -17,6 +17,14 @@ class TaskRepository:
             return task.id
 
     @classmethod
+    async def return_one(cls, id: int):
+        async with new_session() as session:
+            query = select(TaskOrm)
+            result = await session.execute(query)
+            task_models = result.scalars().one()
+            return task_models
+
+    @classmethod
     async def find_all(cls) -> list[STask]:
         async with new_session() as session:
             query = select(TaskOrm)
