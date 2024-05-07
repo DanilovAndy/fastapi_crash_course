@@ -7,7 +7,7 @@ from schemas import STask, STaskAdd, STaskID
 
 router = APIRouter(
     prefix="/tasks",
-    tags=["Таски"]
+    tags=["Taskmanager"]
 )
 
 

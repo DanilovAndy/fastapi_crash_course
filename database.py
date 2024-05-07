@@ -1,5 +1,4 @@
 from typing import Optional
-from datetime import datetime
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
@@ -14,7 +13,7 @@ class Model(DeclarativeBase):
 
 
 class TaskOrm(Model):
-    __tablename__ = "tasks"
+    __tablename__ = "My tasks"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str]
