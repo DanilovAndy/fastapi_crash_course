@@ -1,3 +1,4 @@
 /.git-hooks/commit-msg
 /git-conventional-commits.yaml
 tasks.db
+.idea
