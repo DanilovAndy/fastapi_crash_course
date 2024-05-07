@@ -26,10 +26,13 @@ async def get_tasks() -> list[STask]:
     return tasks
 
 
-@router.delete("/{task_id}")
-async def delete_task(task_id: int):
+@router.delete("")
+async def delete_task(task_id: Annotated[STaskID, Depends()]):
     async with new_session() as session:
-        task = await session.get(TaskOrm, task_id)
+        task_dict = task_id.model_dump()
+        print(task_dict)
+        task = await session.get(TaskOrm, task_dict['task_id']) #FIXME
+
         if task is None:
             raise HTTPException(status_code=404, detail="Task not found")
         await session.delete(task)
