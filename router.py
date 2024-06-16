@@ -39,11 +39,3 @@ async def delete_task(task_id: Annotated[STaskID, Depends()]):
         await session.commit()
 
         return {"ok": True}
-
-# @router.delete("")
-# async def delete_task(
-#         task: Annotated[STaskID, Depends()]
-# ):
-#
-#
-#     return {"ok": True}
