@@ -1,8 +1,7 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 
-from database import new_session, TaskOrm
 from repository import TaskRepository
 from schemas import STask, STaskAdd, STaskID
 
@@ -28,14 +27,5 @@ async def get_tasks() -> list[STask]:
 
 @router.delete("")
 async def delete_task(task_id: Annotated[STaskID, Depends()]):
-    async with new_session() as session:
-        task_dict = task_id.model_dump()
-        print(task_dict)
-        task = await session.get(TaskOrm, task_dict['task_id']) #FIXME
-
-        if task is None:
-            raise HTTPException(status_code=404, detail="Task not found")
-        await session.delete(task)
-        await session.commit()
-
-        return {"ok": True}
+    result = await TaskRepository.delete_one(task_id)
+    return result
