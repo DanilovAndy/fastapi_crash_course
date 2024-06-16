@@ -17,11 +17,11 @@ class TaskRepository:
             return task.id
 
     @classmethod
-    async def return_one(cls, id: int):
+    async def return_one(cls, task_id_model: int):
         async with new_session() as session:
-            query = select(TaskOrm)
+            query = select(TaskOrm).where(TaskOrm.id == task_id_model)
             result = await session.execute(query)
-            task_models = result.scalars().one()
+            task_models = result.scalars().one_or_none()
             return task_models
 
     @classmethod
